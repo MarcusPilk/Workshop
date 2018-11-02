@@ -8,6 +8,8 @@ let client = new elastic.Client();
 
 
 app.set('view engine','ejs');
+app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.json());
 
 client.ping({
     requestTimeout: 30000,
@@ -31,7 +33,7 @@ app.get('/',(req,res) =>{
         },
         q: 'Generation:1'
     }).then(function(resp) {
-        let response = [];
+        var response = [];
         resp.hits.hits.forEach(res => {
             response.push(res._source);
         });
@@ -43,9 +45,9 @@ app.get('/',(req,res) =>{
     }
 );
 
-app.get('/search',(req,res) =>{
-    let terms = req.body.query
-        client.search({
+app.post('/search',(req,res) =>{
+    let terms = req.body.query;
+    client.search({
             index: 'pokedex',
             type: 'Pokemon',
             size: '200',
@@ -53,13 +55,14 @@ app.get('/search',(req,res) =>{
                 sort: [{"#":{"order":"asc"}}]
 
             },
-            q: terms
+            q: terms.toString()
         }).then(function(resp) {
-            let response = [];
+            var results = [];
             resp.hits.hits.forEach(res => {
-                response.push(res._source);
+                results.push(res._source);
             });
-            res.render("index",{'pokemon':response})
+            console.log(results);
+            res.render("index",{'pokemon':results})
         }, function(err) {
             console.trace(err.message);
         });
