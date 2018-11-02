@@ -51,8 +51,13 @@
         let term = e + " ''";
         document.getElementById('searchTerms').value += term;
     }
+    function resultReturned(){
+
+    }
+
     function searchPokemon() {
         let request = new XMLHttpRequest();
+
         request.addEventListener("load", resultReturned);
         let data = new FormData();
         data.append("query", document.getElementById("searchTerms").value)
