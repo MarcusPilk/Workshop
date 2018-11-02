@@ -18,7 +18,7 @@
             </div>
         </div>
         <hr>
-        <button class="btn btn-danger">Name</button>
+        <button class="btn btn-danger" onclick="addQuery('Name: ')">Name</button>
         <button class="btn btn-danger">Type</button>
 
     </div>
@@ -28,6 +28,8 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Type(s)</th>
+                <th>Total Stats</th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +37,8 @@
                 <tr>
                     <td><%= poke['#'] %></td>
                     <td><%= poke.Name%></td>
+                    <td><%= poke['Type 1']%> <%=poke['Type 2']%></td>
+                    <td><%= poke.Total%></td>
                 </tr>
             <% }) %>
             </tbody>
@@ -43,9 +47,13 @@
 </div>
 </body>
 <script>
+    function addQuery(e) {
+        let term = e + " ''";
+        document.getElementById('searchTerms').value += term;
+    }
     function searchPokemon() {
         var request = new XMLHttpRequest();
-        
+
         var query = document.getElementById("searchTerms").value;
         console.log(query);
     }
