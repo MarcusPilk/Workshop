@@ -2,6 +2,7 @@
   "name": "Workshop",
   "version": "1.0.0",
   "dependencies": {
+    "@types/express": "^4.16.0",
     "body-parser": "latest",
     "ejs": "latest",
     "elasticsearch": "^15.2.0",

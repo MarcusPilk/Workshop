@@ -57,13 +57,10 @@
 
     function searchPokemon() {
         let request = new XMLHttpRequest();
-
         request.addEventListener("load", resultReturned);
-        let data = new FormData();
+        let data = new URLSearchParams();
         data.append("query", document.getElementById("searchTerms").value)
         request.open("POST", "http://localhost:9000/search");
         request.send(data);
-        let query = document.getElementById("searchTerms").value;
-        console.log(query);
     }
 </script>
