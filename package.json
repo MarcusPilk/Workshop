@@ -1,0 +1,10 @@
+{
+  "name": "Workshop",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "latest",
+    "ejs": "latest",
+    "elasticsearch": "^15.2.0",
+    "express": "^4.16.4"
+  }
+}
