@@ -1,10 +1,10 @@
-var express = require('express');
-var app = new express();
-var ejs = require('ejs');
-var bodyparser = require('body-parser');
-var elastic = require('elasticsearch');
+let express = require('express');
+let app = new express();
+let ejs = require('ejs');
+let bodyparser = require('body-parser');
+let elastic = require('elasticsearch');
 
-var client = new elastic.Client();
+let client = new elastic.Client();
 
 
 app.set('view engine','ejs');
@@ -22,7 +22,7 @@ client.ping({
 
 app.get('/',(req,res) =>{
     client.search({
-        index: 'pokedex',
+        index: 'pokedex4',
         type: 'Pokemon',
         size: '200',
         body: {
@@ -31,10 +31,10 @@ app.get('/',(req,res) =>{
         },
         q: 'Generation:1'
     }).then(function(resp) {
-        var response = [];
+        let response = [];
         resp.hits.hits.forEach(res => {
             response.push(res._source);
-        })
+        });
         res.render("index",{'pokemon':response})
     }, function(err) {
         console.trace(err.message);
