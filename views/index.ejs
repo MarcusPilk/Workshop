@@ -6,23 +6,20 @@
 </head>
 <body>
 <div class="container">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <h1>Elastidex</h1>
         <hr>
         <div class="row">
             <div class="col-md-10">
                 <input class="form-control" type="text" placeholder="Enter search term here" id="searchTerms">
             </div>
+            <hr>
             <div class="col-md-2">
                 <button class="btn btn-primary" onclick="searchPokemon()">Search</button>
             </div>
         </div>
-        <hr>
-        <button class="btn btn-danger" onclick="addQuery('Name: ')">Name</button>
-        <button class="btn btn-danger">Type</button>
-
     </div>
-    <div class="col-md-6">
+    <div class="col-md-9">
         <table class="table table-hover">
             <thead>
             <tr>
@@ -30,6 +27,8 @@
                 <th>Name</th>
                 <th>Type(s)</th>
                 <th>Total Stats</th>
+                <th>HP</th>
+                <th>Legendary</th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +38,8 @@
                     <td><%= poke.Name%></td>
                     <td><%= poke['Type 1']%> <%=poke['Type 2']%></td>
                     <td><%= poke.Total%></td>
+                    <td><%= poke.HP%></td>
+                    <td><%= poke.Legendary%></td>
                 </tr>
             <% }) %>
             </tbody>

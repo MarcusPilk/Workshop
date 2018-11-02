@@ -57,7 +57,7 @@ app.get('/result',(req,res) =>{
                 sort: [{"#":{"order":"asc"}}]
 
             },
-            q: searchData
+            q: searchData + " AND Generation:1"
         }).then(function(resp) {
             let response = [];
             resp.hits.hits.forEach(res => {
