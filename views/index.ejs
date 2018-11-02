@@ -7,16 +7,21 @@
 <body>
 <div class="container">
     <div class="col-md-3">
-        <h1>Elastidex</h1>
+        <h1><a href="/">Elastidex</a></h1>
         <hr>
         <div class="row">
-            <div class="col-md-10">
-                <input class="form-control" type="text" placeholder="Enter search term here" id="searchTerms">
-            </div>
+            <input class="form-control" type="text" placeholder="Enter search term here" id="searchTerms">
             <hr>
-            <div class="col-md-2">
-                <button class="btn btn-primary" onclick="searchPokemon()">Search</button>
-            </div>
+            <button class="btn btn-primary" onclick="searchPokemon()">Search</button>
+            <hr>
+            Generation 1 <input id="cb1" type="checkbox" value="1" checked><br>
+            Generation 2 <input id="cb2" type="checkbox" value="2"><br>
+            Generation 3 <input id="cb3" type="checkbox" value="3"><br>
+            Generation 4 <input id="cb4" type="checkbox" value="4"><br>
+            Generation 5 <input id="cb5" type="checkbox" value="5"><br>
+            Generation 6 <input id="cb6" type="checkbox" value="6"><br>
+
+
         </div>
     </div>
     <div class="col-md-9">
@@ -48,6 +53,41 @@
 </div>
 </body>
 <script>
+    function checkBoxes() {
+        let cbs = [];
+        let endQuery = '';
+
+        var cb1 = document.getElementById("cb1");
+        var cb2 = document.getElementById("cb2");
+        var cb3 = document.getElementById("cb3");
+        var cb4 = document.getElementById("cb4");
+        var cb5 = document.getElementById("cb5");
+        var cb6 = document.getElementById("cb6");
+
+        if (cb1.checked) cbs.push(cb1.value);
+        if (cb2.checked) cbs.push(cb2.value);
+        if (cb3.checked) cbs.push(cb3.value);
+        if (cb4.checked) cbs.push(cb4.value);
+        if (cb5.checked) cbs.push(cb5.value);
+        if (cb6.checked) cbs.push(cb6.value);
+
+        if (cbs.length >1) {
+            endQuery +=  " AND (";
+            cbs.forEach(box => {
+                endQuery += "Generation:" + box;
+                if(cbs.indexOf(box)!== cbs.length -1){
+                    endQuery += " OR "
+                }
+            });
+            endQuery += ")";
+        }else{
+            endQuery = " AND Generation:" + cbs[0];
+        }
+
+        console.log(endQuery);
+        return endQuery;
+
+    }
     function addQuery(e) {
         let term = e + " ''";
         document.getElementById('searchTerms').value += term;
@@ -61,7 +101,9 @@
         let request = new XMLHttpRequest();
         request.addEventListener("load", resultReturned);
         let data = new URLSearchParams();
-        data.append("query", document.getElementById("searchTerms").value)
+        var searchQ = document.getElementById("searchTerms").value + checkBoxes();
+        console.log(searchQ);
+        data.append("query", document.getElementById("searchTerms").value + checkBoxes())
         request.open("POST", "http://localhost:9000/search");
         request.send(data);
     }

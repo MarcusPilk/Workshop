@@ -52,12 +52,12 @@ app.get('/result',(req,res) =>{
         client.search({
             index: 'pokedex',
             type: 'Pokemon',
-            size: '200',
+            size: '800',
             body: {
                 sort: [{"#":{"order":"asc"}}]
 
             },
-            q: searchData + " AND Generation:1"
+            q: searchData
         }).then(function(resp) {
             let response = [];
             resp.hits.hits.forEach(res => {
