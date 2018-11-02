@@ -23,7 +23,7 @@ client.ping({
 
 app.get('/',(req,res) =>{
     client.search({
-        index: 'pokedex4',
+        index: 'pokedex',
         type: 'Pokemon',
         size: '200',
         body: {
@@ -43,26 +43,28 @@ app.get('/',(req,res) =>{
 
     }
 );
-
-app.post('/search',(req,res) =>{
-    let terms = req.body.query;
-    console.log(terms);
+let searchData = null;
+app.post('/search', (req,res) => {
+    searchData = req.body.query;
+    res.redirect('/result');
+});
+app.get('/result',(req,res) =>{
         client.search({
-            index: 'pokedex4',
+            index: 'pokedex',
             type: 'Pokemon',
             size: '200',
             body: {
                 sort: [{"#":{"order":"asc"}}]
 
             },
-            q: terms.toString()
+            q: searchData
         }).then(function(resp) {
             let response = [];
             resp.hits.hits.forEach(res => {
                 response.push(res._source);
             });
             console.log(response);
-            res.render("index",{'pokemon':response})
+            res.render('index', {'pokemon': response})
         }, function(err) {
             console.trace(err.message);
         });
